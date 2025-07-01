@@ -1,0 +1,24 @@
+services:
+
+  soniks-postgres:
+    image: postgres:17.5
+    container_name: soniks-postgres
+    environment:
+      POSTGRES_DB: $POSTGRES__DB
+      POSTGRES_USER: $POSTGRES__USER
+      POSTGRES_PASSWORD: $POSTGRES__PASSWORD
+    restart: on-failure
+    volumes:
+      - soniks_postgres_data:/var/lib/postgresql/data/
+
+  soniks-backend:
+    build: ../
+    container_name: soniks-backend
+    env_file: ../.env
+    depends_on:
+      - soniks-postgres
+    ports:
+      - 8000:8000
+
+volumes:
+  soniks_postgres_data:

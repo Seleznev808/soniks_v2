@@ -1,7 +1,0 @@
-services:
-
-  soniks-backend:
-    build: .
-    container_name: soniks-backend
-    ports:
-      - 8000:8000

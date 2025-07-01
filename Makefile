@@ -1,14 +1,16 @@
-.PHONY: format, up, up-build, stop
+COMPOSE_FILE = docker_compose/local.yml
+
+.PHONY: format, up_local, up_build_local, stop_local
 
 format:
 	uv run ruff format
 	uv run ruff check --fix
 
-up:
-	docker compose up -d
+up_local:
+	docker compose -f $(COMPOSE_FILE) up -d
 
-up-build:
-	docker compose up -d --build
+up_build_local:
+	docker compose -f $(COMPOSE_FILE) up -d --build
 
-stop:
-	docker compose stop
+stop_local:
+	docker compose -f $(COMPOSE_FILE) stop
