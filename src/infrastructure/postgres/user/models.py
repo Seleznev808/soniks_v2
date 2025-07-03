@@ -1,7 +1,7 @@
 from sqlalchemy import Boolean, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from infrastructure.postgres.base_model import BaseORM
+from infrastructure.postgres.base import BaseORM
 from infrastructure.postgres.mixins import TimestampMixin, UUIDMixin
 
 
