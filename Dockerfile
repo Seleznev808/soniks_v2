@@ -6,7 +6,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 ARG WORKDIR=/app
 
-ENV PATH="$WORKDIR/.venv/bin/:${PATH}"
+ENV PATH="$WORKDIR/.venv/bin:${PATH}"
 
 WORKDIR $WORKDIR
 
@@ -15,11 +15,11 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --locked --no-install-project
 
-COPY pyproject.toml uv.lock ./
+COPY pyproject.toml uv.lock alembic.ini ./
 
-COPY src/ .
+COPY src/ ./src
 
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

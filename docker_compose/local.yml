@@ -8,6 +8,8 @@ services:
       POSTGRES_USER: $POSTGRES__USER
       POSTGRES_PASSWORD: $POSTGRES__PASSWORD
     restart: on-failure
+    ports:
+      - 5432:5432
     volumes:
       - soniks_postgres_data:/var/lib/postgresql/data/
 
