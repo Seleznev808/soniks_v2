@@ -1,20 +1,35 @@
 COMPOSE_FILE = docker_compose/local.yml
 APP_SERVICE = soniks-backend
 
-.PHONY: format, up_local, up_build_local, stop_local, makemigrations, migrate, downgrade
+.PHONY: format, up, up_build, stop, down, down_v, bash, logs
 
 format:
 	uv run ruff format
 	uv run ruff check --fix
 
-up_local:
+up:
 	docker compose -f $(COMPOSE_FILE) up -d
 
-up_build_local:
+up_build:
 	docker compose -f $(COMPOSE_FILE) up -d --build
 
-stop_local:
+stop:
 	docker compose -f $(COMPOSE_FILE) stop
+
+down:
+	docker compose -f $(COMPOSE_FILE) down
+
+down_v:
+	docker compose -f $(COMPOSE_FILE) down -v
+
+bash:
+	docker exec -it $(APP_SERVICE) bash
+
+logs:
+	docker logs $(APP_SERVICE)
+
+
+.PHONY: makemigrations, migrate, downgrade
 
 makemigrations:
 	POSTGRES__HOST=localhost PYTHONPATH=src alembic revision --autogenerate -m="$(m)"
