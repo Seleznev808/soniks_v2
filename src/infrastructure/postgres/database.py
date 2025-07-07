@@ -39,7 +39,6 @@ class Database:
         session = self._async_session()
         try:
             yield session
-            await session.commit()
         except SQLAlchemyError:
             await session.rollback()
             raise
