@@ -21,5 +21,3 @@ COPY src/ ./src
 
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked
-
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
