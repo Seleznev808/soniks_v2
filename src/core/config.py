@@ -9,11 +9,19 @@ class PostgresSettings(BaseModel):
     HOST: str
     PORT: str
 
+    @property
+    def url(self) -> str:
+        return f"postgresql+asyncpg://{self.USER}:{self.PASSWORD}@{self.HOST}:{self.PORT}/{self.DB}"
+
+
+class SQLEngineSettings(BaseModel):
     ECHO: bool = False
     ECHO_POOL: bool = False
     POOL_SIZE: int = 10
     MAX_OVERFLOW: int = 20
 
+
+class AlembicSettings(BaseModel):
     NAMING_CONVENTION: dict[str, str] = {
         "pk": "pk_%(table_name)s",
         "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
@@ -22,9 +30,9 @@ class PostgresSettings(BaseModel):
         "ck": "ck_%(table_name)s_%(constraint_name)s",
     }
 
-    @property
-    def url(self) -> str:
-        return f"postgresql+asyncpg://{self.USER}:{self.PASSWORD}@{self.HOST}:{self.PORT}/{self.DB}"
+
+class AppSettings(BaseModel):
+    DEBUG: bool = False
 
 
 class Settings(BaseSettings):
@@ -34,6 +42,9 @@ class Settings(BaseSettings):
         env_nested_delimiter="__",
     )
     postgres: PostgresSettings
+    sql_engine: SQLEngineSettings = SQLEngineSettings()
+    alembic: AlembicSettings = AlembicSettings()
+    app: AppSettings = AppSettings()
 
 
 settings = Settings()

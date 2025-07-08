@@ -1,8 +1,4 @@
-from fastapi import FastAPI
+from src.app import create_app
+from src.core.config import settings
 
-app = FastAPI(title="soniks_v2")
-
-
-@app.get("/", description="hello")
-async def root():
-    return {"message": "Hello soniks_v2"}
+app = create_app(settings)

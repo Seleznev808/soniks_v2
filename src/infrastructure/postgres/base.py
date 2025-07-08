@@ -1,10 +1,13 @@
 from sqlalchemy import MetaData
 from sqlalchemy.orm import DeclarativeBase
 
-from core.config import settings
+from src.core.config import settings
 
 
 class BaseORM(DeclarativeBase):
     __abstract__ = True
 
-    metadata = MetaData(naming_convention=settings.postgres.NAMING_CONVENTION)
+    metadata = MetaData(naming_convention=settings.alembic.NAMING_CONVENTION)
+
+
+print(settings.alembic.NAMING_CONVENTION)

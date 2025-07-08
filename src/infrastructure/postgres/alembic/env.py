@@ -7,9 +7,9 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 from sqlalchemy.util.concurrency import await_only, in_greenlet
 
-import infrastructure.postgres  # noqa F401
-from core.config import settings
-from infrastructure.postgres.base import BaseORM
+import src.infrastructure.postgres  # noqa F401
+from src.core.config import settings
+from src.infrastructure.postgres.base import BaseORM
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

@@ -1,8 +1,8 @@
 from sqlalchemy import Boolean, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from infrastructure.postgres.base import BaseORM
-from infrastructure.postgres.mixins import TimestampMixin, UUIDMixin
+from src.infrastructure.postgres.base import BaseORM
+from src.infrastructure.postgres.mixins import TimestampMixin, UUIDMixin
 
 
 class UserORM(BaseORM, UUIDMixin, TimestampMixin):
