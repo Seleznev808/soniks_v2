@@ -8,6 +8,3 @@ class BaseORM(DeclarativeBase):
     __abstract__ = True
 
     metadata = MetaData(naming_convention=settings.alembic.NAMING_CONVENTION)
-
-
-print(settings.alembic.NAMING_CONVENTION)
