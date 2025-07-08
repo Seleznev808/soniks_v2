@@ -22,7 +22,6 @@ def create_app(settings: Settings) -> FastAPI:
     )
 
     context = {
-        Settings: settings,
         PostgresSettings: settings.postgres,
         SQLEngineSettings: settings.sql_engine,
     }
