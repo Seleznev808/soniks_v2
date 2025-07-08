@@ -26,7 +26,10 @@ bash:
 	docker exec -it $(APP_SERVICE) bash
 
 logs:
-	docker logs $(APP_SERVICE)
+	docker logs $(APP_SERVICE) -f
+
+logs_all:
+	docker compose -f $(COMPOSE_FILE) logs -f
 
 
 .PHONY: makemigrations, migrate, downgrade
