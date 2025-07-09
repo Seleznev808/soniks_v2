@@ -4,9 +4,9 @@ COPY --from=ghcr.io/astral-sh/uv:0.7.15 /uv /uvx /bin/
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-ARG WORKDIR=/app
+ENV UV_PROJECT_ENVIRONMENT=/usr/local
 
-ENV PATH="$WORKDIR/.venv/bin:${PATH}"
+ARG WORKDIR=/app
 
 WORKDIR $WORKDIR
 
