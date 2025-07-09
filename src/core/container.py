@@ -1,15 +1,17 @@
 from dishka import Provider, Scope
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
+from src.application.interfaces.uow import UnitOfWork
 from src.core.config import PostgresSettings, SQLEngineSettings
 from src.infrastructure.postgres.database import (
     get_engine,
     get_session,
     get_sessionmaker,
 )
+from src.infrastructure.postgres.uow import UnitOfWorkORM
 
 
-def configs_provider() -> Provider:
+def config_provider() -> Provider:
     provider = Provider()
 
     provider.from_context(provides=PostgresSettings, scope=Scope.APP)
@@ -40,8 +42,17 @@ def db_provider() -> Provider:
     return provider
 
 
+def gateway_provider() -> Provider:
+    provider = Provider(scope=Scope.REQUEST)
+
+    provider.provide(UnitOfWorkORM, provides=UnitOfWork)
+
+    return provider
+
+
 def get_providers() -> tuple[Provider, ...]:
     return (
-        configs_provider(),
+        config_provider(),
         db_provider(),
+        gateway_provider(),
     )
