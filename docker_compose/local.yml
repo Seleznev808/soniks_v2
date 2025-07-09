@@ -12,6 +12,11 @@ services:
       - 5432:5432
     volumes:
       - soniks_postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES__USER} -d ${POSTGRES__DB}" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
 
   soniks-backend:
     build: ../
@@ -19,7 +24,8 @@ services:
     env_file: ../.env
     command: "uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload"
     depends_on:
-      - soniks-postgres
+      soniks-postgres:
+        condition: service_healthy
     ports:
       - 8000:8000
     volumes:
