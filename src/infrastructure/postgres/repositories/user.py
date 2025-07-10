@@ -3,9 +3,9 @@ from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.application.interfaces.user.repository import UserRepository
+from src.application.interfaces.user import UserRepository
 from src.domain.entities.user import User
-from src.infrastructure.postgres.user.models import UserORM
+from src.infrastructure.postgres.models.user import UserORM
 
 
 class UserRepositoryORM(UserRepository):

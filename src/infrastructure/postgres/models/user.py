@@ -2,8 +2,8 @@ from sqlalchemy import Boolean, Enum, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.domain.entities.user import User, UserRole
-from src.infrastructure.postgres.base import BaseORM
-from src.infrastructure.postgres.mixins import TimestampMixin, UUIDMixin
+from src.infrastructure.postgres.models.base import BaseORM
+from src.infrastructure.postgres.models.mixins import TimestampMixin, UUIDMixin
 
 
 class UserORM(BaseORM, UUIDMixin, TimestampMixin):
