@@ -11,7 +11,10 @@ class UserORM(BaseORM, UUIDMixin, TimestampMixin):
 
     username: Mapped[str] = mapped_column(String(128), unique=True)
     email: Mapped[str] = mapped_column(String(128), unique=True)
-    role: Mapped[UserRole] = mapped_column(Enum(UserRole), default=UserRole.USER)
+    role: Mapped[UserRole] = mapped_column(
+        Enum(UserRole, name="user_role"),
+        default=UserRole.USER,
+    )
     is_active: Mapped[bool] = mapped_column(Boolean(), default=True)
 
     def to_entity(self) -> User:
