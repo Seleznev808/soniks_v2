@@ -12,7 +12,7 @@ class UserRepositoryORM(UserRepository):
     def __init__(self, session: AsyncSession):
         self._session = session
 
-    async def get_user_by_id(self, user_id: UUID) -> User | None:
+    async def get_by_id(self, user_id: UUID) -> User | None:
         stmt = select(UserORM).where(UserORM.uuid == user_id)
         result = await self._session.execute(stmt)
         user_orm = result.scalar_one_or_none()
@@ -22,8 +22,8 @@ class UserRepositoryORM(UserRepository):
 
         return user_orm.to_entity()
 
-    async def create_user(self, user: User) -> User:
+    async def add(self, user: User) -> User:
         user_orm = UserORM.from_entity(user)
         self._session.add(user_orm)
 
-        return user_orm.to_entity()
+        return user

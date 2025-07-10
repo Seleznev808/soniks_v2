@@ -17,3 +17,18 @@ class User:
     email: str
     role: UserRole
     is_active: bool
+
+    @classmethod
+    def create(
+        cls,
+        uuid: UUID,
+        username: str,
+        email: str,
+    ) -> "User":
+        cls(
+            uuid=uuid,
+            username=username,
+            email=email,
+            role=UserRole.USER,
+            is_active=True,
+        )
