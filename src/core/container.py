@@ -1,14 +1,16 @@
 from dishka import Provider, Scope
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
-from src.application.interfaces.uow import UnitOfWork
+from src.application.interfaces.transaction import Transaction
+from src.application.interfaces.user import UserRepository
 from src.core.config import PostgresSettings, SQLEngineSettings
 from src.infrastructure.postgres.database import (
     get_engine,
     get_session,
     get_sessionmaker,
 )
-from src.infrastructure.postgres.uow import UnitOfWorkORM
+from src.infrastructure.postgres.repositories.user import UserRepositoryORM
+from src.infrastructure.postgres.transaction import TransactionORM
 
 
 def config_provider() -> Provider:
@@ -45,7 +47,8 @@ def db_provider() -> Provider:
 def gateway_provider() -> Provider:
     provider = Provider(scope=Scope.REQUEST)
 
-    provider.provide(UnitOfWorkORM, provides=UnitOfWork)
+    provider.provide(TransactionORM, provides=Transaction)
+    provider.provide(UserRepositoryORM, provides=UserRepository)
 
     return provider
 

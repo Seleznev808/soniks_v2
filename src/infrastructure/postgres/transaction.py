@@ -2,10 +2,10 @@ from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.application.interfaces.uow import UnitOfWork
+from src.application.interfaces.transaction import Transaction
 
 
-class UnitOfWorkORM(UnitOfWork):
+class TransactionORM(Transaction):
     def __init__(self, session: AsyncSession) -> None:
         self._session: AsyncSession = session
 
@@ -18,5 +18,6 @@ class UnitOfWorkORM(UnitOfWork):
     async def __aenter__(self) -> Self:
         return self
 
-    async def __aexit__(self) -> None:
-        await self.rollback()
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
+        if exc_type:
+            await self.rollback()
